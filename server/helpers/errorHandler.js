@@ -1,6 +1,7 @@
 const ErrorModel = require("../models/errorModel");
 
-const errorHandler = (err, req, res, next) => {
+function errorHandler(err, req, res, next){
+
     if(err instanceof Error) {
         res.status(err.status || 500).send(err.message);
         return;
