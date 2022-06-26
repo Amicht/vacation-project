@@ -9,7 +9,6 @@ function getNewToken(user){
 };
 
 function verifyToken(authHeader, minRole){
-    console.log(authHeader);
     return new Promise(resolve => {
         if(!authHeader){
             resolve(false);
