@@ -9,7 +9,7 @@ const METHODS = {
     POST: 'POST'
 };
 
-const setToken = (token:string) => window.sessionStorage.setItem("user-jwt", JSON.stringify(token));
+export const setToken = (token:string) => window.sessionStorage.setItem("user-jwt", JSON.stringify(token));
 
 const getToken = () => {
     const token =  window.sessionStorage.getItem("user-jwt") || "[]";
