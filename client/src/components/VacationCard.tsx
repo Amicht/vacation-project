@@ -10,8 +10,8 @@ const VacationCard = (props: VacationI) => {
   const { user } = useContext(UserCtxt);
   
   return (
-    <Card className="col-sm-3">
-            {user.role === 1? <FollowBtn follow={props.follow}/>:<AdminBtns follow={props.follow}/>}
+    <Card className="col-md-3">
+            {user.role === 1? <FollowBtn follow={props.follow} vacId={props.id}/>:<AdminBtns follow={props.follow}/>}
       <Card.Img src={'/images/'+props.picture}/> 
         <Card.Title className='text-success fw-bold'>{props.destination}</Card.Title>
       <Card.Body>
