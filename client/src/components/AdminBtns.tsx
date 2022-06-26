@@ -1,17 +1,16 @@
 import React from 'react'
+import VacationI from '../interface/vacationI'
 import DeleteBtn from './DeleteBtn'
 import EditBtn from './EditBtn'
 import FollowCount from './FollowCount'
 
-interface FollowCountI{
-    follow:number
-}
-const AdminBtns = (props:FollowCountI) => {
+
+const AdminBtns = (props:VacationI) => {
   return (
     <div className='row'>
         <FollowCount follow={props.follow}/>
-        <EditBtn />
-        <DeleteBtn />
+        <EditBtn {...props}/>
+        <DeleteBtn destination={props.destination} vacId={props.id}/>
     </div>
   )
 }

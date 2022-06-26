@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { SocketCtxt, UserCtxt, VacsCtxt } from "../App";
@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import VacationCard from "../components/VacationCard";
 import { getVacations } from "../logic/api";
 
+
 const Vacations = () => {
     const {vacs, setVacs } = useContext(VacsCtxt);
     const {setUser } = useContext(UserCtxt);
@@ -14,9 +15,9 @@ const Vacations = () => {
     const mySocket = useContext(SocketCtxt);
 
     useEffect(()=> {
-      if(mySocket.socket){return};
       getVacations().then(data => {
         setUser(data.user);
+        setVacs(data.vacations);
         mySocket.connect(data.user, setVacs)
       }).catch(() => navigate('/login'));
     }, [navigate,mySocket, setUser, setVacs]);
