@@ -1,5 +1,6 @@
 const express = require('express');
 const errorHandler = require('./helpers/errorHandler');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 const cors = require('cors');
 const ErrorModel = require('./models/errorModel');
@@ -10,6 +11,7 @@ const socketLogic = require('./bl/socket-logic');
 const PORT = process.env.PORT;
 const app = express();
 
+app.use(fileUpload());
 app.use(cors({origin:'http://localhost:3000'})); // allow react
 app.use(express.json());
 
