@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../logic/api";
+import {  register } from "../logic/api";
 
 
 const Register = () => {
@@ -27,7 +27,7 @@ const Register = () => {
             delete userInp.password2;
         register(userInp).then(()=> navigate('/'))
         .catch(err => console.log(err.message))
-    }
+    };
 
   return (
     <div className="text-center py-5">
