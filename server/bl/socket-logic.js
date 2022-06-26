@@ -55,9 +55,24 @@ function socketLogic(httpServer){
                 })
             }catch(err){};
         })
+        socket.on('add-vacation', newVacation => {
+            vacations_bl.addVacation(newVacation, ()=> {
+                mySocketServer.sockets.emit('update-client-vacations');
+            })
+        })
+        socket.on('update-vacation', updatedVacation => {
+            vacations_bl.updateVacation(updatedVacation, ()=> {
+                mySocketServer.sockets.emit('update-client-vacations');
+            })
+        })
+        socket.on('delete-vacation', vacId => {
+            vacations_bl.deleteVacation(vacId, () => {
+                mySocketServer.sockets.emit('update-client-vacations');
+            })
+        });
         socket.on("disconnect", ()=> {
             console.log('client hes been disconnect');
-        })
+        });
     })
 };
 
