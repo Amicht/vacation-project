@@ -8,9 +8,13 @@ import VacationI from './interface/vacationI';
 import UserI from './interface/UserI';
 import AddVacation from './pages/AddVacation';
 import Reports from './pages/Reports';
+import mySocketIoService from './services/SocketIoService';
+import SocketIoService from './services/SocketIoService';
+
 
 export const VacsCtxt = createContext<any>([]);
 export const UserCtxt = createContext<any>({});
+export const SocketCtxt = createContext<typeof SocketIoService>(mySocketIoService)
 
 function App() {
   const [ vacs, setVacs] = useState<VacationI[]>([]);
@@ -19,17 +23,19 @@ function App() {
   return (
     <VacsCtxt.Provider value={{vacs, setVacs}}>
     <UserCtxt.Provider value={{user, setUser}}>
-      <div className='container'>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Vacations />} />
-        <Route path='/reports' element={<Reports />} />
-        <Route path='/addVacation' element={<AddVacation />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-      </Routes>
-    </BrowserRouter>
-      </div>
+    <SocketCtxt.Provider value={mySocketIoService}>
+        <div className='container'>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Vacations />} />
+          <Route path='/reports' element={<Reports />} />
+          <Route path='/addVacation' element={<AddVacation />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+        </div>
+    </SocketCtxt.Provider>
     </UserCtxt.Provider>
     </VacsCtxt.Provider>
   );
