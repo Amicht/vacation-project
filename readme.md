@@ -12,16 +12,22 @@ This project was An end-to-end school project, on my fullstack studies at 'John-
 ### Project tools / dependancies
 
 #### Client
- - React typescript
- - React.Canvas.js
- - Socket.io-client
- - React Bootstrap
+ - react typescript
+ - react-router-dom
+ - react.canvas.js
+ - socket.io-client
+ - react bootstrap
+ - react redux
+ - redux-toolkit
  
 #### Server
- - Node.js
- - Express.js
- - Socket.io
- - jwt
+ - node.js
+ - express.js
+ - express-fileupload
+ - socket.io
+ - uuid
+ - jsonwebtoken
+ - mysql
 
 #### Database
  - Mysql
