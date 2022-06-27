@@ -10,6 +10,7 @@ function socketLogic(httpServer){
             origin: "http://localhost:3000" // allow react 
         }
     }
+    
     const mySocketServer = new SocketServer(httpServer,options);
     
     mySocketServer.sockets.on("connection", socket => {
@@ -17,7 +18,6 @@ function socketLogic(httpServer){
         socket.on('get-vacations-from-server', user => {
             try{
                 vacations_bl.getAllVacations(user, vacations => {
-                    console.log(user.role);
                     if(user.role === 1){
                         socket.emit('set-vacations-to-client',vacations);
                     }
@@ -30,11 +30,7 @@ function socketLogic(httpServer){
         socket.on('client-follow',(user,vacationId)=> {
             try{
                 user_bl.followVacation(user.id, vacationId, ()=> {
-                    // set user
-                    vacations_bl.getAllVacations(user, userVacations => {
-                        socket.emit('set-vacations-to-client',userVacations);
-                    })
-                    //set admin
+                    //update admin
                     vacations_bl.getAdminVacations(adminVacations => {
                         mySocketServer.sockets.emit('set-Admin-vacations-to-client',adminVacations);
                     })
@@ -44,11 +40,7 @@ function socketLogic(httpServer){
         socket.on('client-unfollow',(user,vacationId)=> {
             try{
                 user_bl.unFollowVacation(user.id, vacationId, ()=> {
-                    // set user
-                    vacations_bl.getAllVacations(user, userVacations => {
-                        socket.emit('set-vacations-to-client',userVacations);
-                    })
-                    //set admin
+                    //update admin
                     vacations_bl.getAdminVacations(adminVacations => {
                         mySocketServer.sockets.emit('set-Admin-vacations-to-client',adminVacations);
                     })
@@ -69,9 +61,6 @@ function socketLogic(httpServer){
             vacations_bl.deleteVacation(vacId, () => {
                 mySocketServer.sockets.emit('update-client-vacations');
             })
-        });
-        socket.on("disconnect", ()=> {
-            console.log('client hes been disconnect');
         });
     })
 };

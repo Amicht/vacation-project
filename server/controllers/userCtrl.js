@@ -18,7 +18,6 @@ userCtrl.post('/login', async(req,res)=>{
 
 
 userCtrl.post('/register', async(req,res)=>{
-    req.body.role= 1;
     try{
         bl.addUser(req.body, data => {
             if(!data) return res.status(400).send("username already exists");
