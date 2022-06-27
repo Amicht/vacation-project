@@ -1,29 +1,32 @@
 import { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { SocketCtxt, UserCtxt } from '../App';
+import { SocketCtxt } from '../App';
 import Header from '../components/Header';
+import UserI from '../interface/UserI';
 
 const AddVacation = () => {
-    const { user } = useContext(UserCtxt);
-    const mySocket = useContext(SocketCtxt);
-    const [newVac, setNewVac] = useState<any>({})
-    const navigate = useNavigate();
+  const user:UserI = useSelector((state:any) => state.user.value);
+  const mySocket = useContext(SocketCtxt);
+  const [newVac, setNewVac] = useState<any>({})
+  const navigate = useNavigate();
+  
+  useEffect(()=> {if(user.role < 2) navigate('/')},[navigate,user]);
 
-    useEffect(()=> {if(!user.role || user.role < 2) navigate('/')},[navigate,user]);
-    const addToVacation = (key:string, value:any) => setNewVac({...newVac, [key]:value});
-    const onSend = (e:any) => {
-      e.preventDefault();
-      if(!newVac?.destination || !newVac.description || !newVac.picture || 
-        !newVac.price || !newVac.from_date || !newVac.to_date) {return ;};
-      mySocket.addVacation(newVac);
-      navigate('/');
-    };
+  const addToVacation = (key:string, value:any) => setNewVac({...newVac, [key]:value});
+  const onSend = (e:any) => {
+    e.preventDefault();
+    if(!newVac?.destination || !newVac.description || !newVac.picture || 
+      !newVac.price || !newVac.from_date || !newVac.to_date) {return ;};
+    mySocket.addVacation(newVac);
+    navigate('/');
+  };
 
   return (
     <>
     <Header />
-    <div className='col-sm-5 mx-auto text-center my-5'>
+    <div className='col-md-6 mx-auto text-center my-5'>
     <h2>Add Vacation</h2>
     <Form>
       <Form.Group className="mb-3">

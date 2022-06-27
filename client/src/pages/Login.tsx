@@ -1,13 +1,13 @@
 import { Button, Form } from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {  login } from "../logic/api";
+import {  login } from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({username:'',password:''});
     const navigate = useNavigate();
-
+    
     const onLogin = (e:any) => {
         e.preventDefault();
         const { username, password} = credentials;
@@ -21,14 +21,14 @@ const Login = () => {
         <h2>Login</h2>
         <Form className="col-sm-6 mx-auto">
             <Form.Group className="mb-3">
-                <Form.Label>username</Form.Label>
-                <Form.Control type="text" placeholder="enter username" 
+                <Form.Label>Username</Form.Label>
+                <Form.Control type="text" placeholder="Enter username" 
                 onChange={e=> setCredentials({...credentials, username:e.target.value})} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="enter Password"
+                <Form.Control type="password" placeholder="Enter password"
                 onChange={e=> setCredentials({...credentials, password:e.target.value})} />
             </Form.Group>
             

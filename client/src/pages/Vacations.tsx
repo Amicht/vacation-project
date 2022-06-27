@@ -1,26 +1,31 @@
-import { createContext, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { SocketCtxt, UserCtxt, VacsCtxt } from "../App";
+import { SocketCtxt } from "../App";
 import VacationI from "../interface/vacationI";
 import Header from "../components/Header";
 import VacationCard from "../components/VacationCard";
-import { getVacations } from "../logic/api";
+import { getVacations } from "../services/api";
+import { useDispatch } from "react-redux";
+import {loginReducer} from '../reducers/user'
+import {setVacationsReducer} from '../reducers/vacation'
+import { useSelector } from "react-redux";
 
 
 const Vacations = () => {
-    const {vacs, setVacs } = useContext(VacsCtxt);
-    const {setUser } = useContext(UserCtxt);
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const vacations:VacationI[] = useSelector((state:any) => state.vacations.value);
     const mySocket = useContext(SocketCtxt);
+    const navigate = useNavigate();
 
     useEffect(()=> {
+      if(mySocket.socket){ mySocket.socket.close()};
       getVacations().then(data => {
-        setUser(data.user);
-        setVacs(data.vacations);
-        mySocket.connect(data.user, setVacs)
+        dispatch(loginReducer(data.user));
+        mySocket.connect(data.user, (vacs:VacationI[]) => dispatch(setVacationsReducer(vacs)))
       }).catch(() => navigate('/login'));
-    }, [navigate,mySocket, setUser, setVacs]);
+      
+    }, [navigate,mySocket, dispatch]);
  
   return (
     <Container>
@@ -28,7 +33,7 @@ const Vacations = () => {
       <div className="text-center">
           <h2>Vacations List</h2>
           <div className="row">
-              {vacs.map((v:VacationI,idx: number) => <VacationCard key={idx} {...v}/>)}
+              {vacations.map((v:VacationI,idx: number) => <VacationCard key={idx} {...v}/>)}
           </div>
       </div>
     </Container>

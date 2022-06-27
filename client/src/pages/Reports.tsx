@@ -1,28 +1,24 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { SocketCtxt, UserCtxt, VacsCtxt } from "../App";
 import Chart from '../components/Chart'
 import Header from "../components/Header";
-import { getVacations } from "../logic/api";
+import UserI from "../interface/UserI";
+import { useSelector } from "react-redux";
+import VacationI from "../interface/vacationI";
 
 const Reports = () => {
-  const { setVacs } = useContext(VacsCtxt);
-  const {setUser } = useContext(UserCtxt);
- const navigate = useNavigate();
- const mySocket = useContext(SocketCtxt);
+  const user:UserI = useSelector((state:any) => state.user.value);
+  const vacations:VacationI[] = useSelector((state:any) => state.vacations.value);
 
- useEffect(()=> {
-   if(mySocket.socket){return};
-    getVacations().then(data => {
-      setUser(data.user);
-      mySocket.connect(data.user, setVacs)
-    }).catch(() => navigate('/login'));
-  }, [navigate,mySocket, setUser, setVacs]);
+  const navigate = useNavigate();
+  
+  // prevent unauthorized access (for user or unregistered hacker)
+  useEffect(()=> {if(user.role < 2) navigate('/')},[navigate,user]);
 
   return (
     <>
         <Header />
-        <Chart />
+        <Chart vacations={vacations}/>
     </>
 
   )

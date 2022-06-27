@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import {  register } from "../logic/api";
+import {  register } from "../services/api";
 
 
 const Register = () => {
@@ -25,7 +25,7 @@ const Register = () => {
             userInp.password === '' || userInp.name === '' ||
             userInp.username === '' || userInp.last_name === '') return;
             delete userInp.password2;
-        register(userInp).then(()=> navigate('/'))
+        register(userInp).then(()=> navigate('/login'))
         .catch(err => console.log(err.message))
     };
 
@@ -34,18 +34,18 @@ const Register = () => {
         <h2>Register</h2>
         <Form className="col-sm-6 mx-auto">
             <Form.Group className="mb-3">
-                <Form.Label>name</Form.Label>
-                <Form.Control type="text" placeholder="enter name"
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" placeholder="Enter name"
                 ref={name} />
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Label>last name</Form.Label>
-                <Form.Control type="text" placeholder="enter last name"
+                <Form.Label>Last name</Form.Label>
+                <Form.Control type="text" placeholder="Enter last name"
                 ref={last_name} />
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Label>username</Form.Label>
-                <Form.Control type="text" placeholder="enter username"
+                <Form.Label>Username</Form.Label>
+                <Form.Control type="text" placeholder="Enter username"
                 ref={username}/>
             </Form.Group>
 
@@ -56,8 +56,8 @@ const Register = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-                <Form.Label>confirm Password</Form.Label>
-                <Form.Control type="password" placeholder="confirm Password"
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control type="password" placeholder="Confirm Password"
                 ref={password2} />
             </Form.Group>
             

@@ -39,9 +39,7 @@ class SocketIoService{
         this.socket.emit('delete-vacation', vacId);
     }
     disconnect(){
-        try{
-            this.socket.disconnect();
-        }catch(err){ }
+        this.socket.close();
     }
 };
 

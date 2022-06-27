@@ -29,7 +29,7 @@ const EditBtn = (props:VacationI) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Update vacation:</Modal.Title>
+          <Modal.Title>Update {props.destination}:</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Form>
@@ -57,7 +57,7 @@ const EditBtn = (props:VacationI) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            close
           </Button>
           <Button variant="success" onClick={onSend}>
             update

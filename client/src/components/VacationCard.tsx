@@ -1,17 +1,17 @@
-import { useContext } from 'react';
 import Card from 'react-bootstrap/Card';
-import { UserCtxt } from '../App';
+import { useSelector } from 'react-redux';
 import VacationI from '../interface/vacationI';
 import AdminBtns from './AdminBtns';
 import FollowBtn from './FollowBtn';
 
 
 const VacationCard = (props: VacationI) => {
-  const { user } = useContext(UserCtxt);
-  
+  const userRole:number = useSelector((state:any) => state.user.value.role);
+
   return (
     <Card className="col-md-4">
-            {user.role === 1? <FollowBtn follow={props.follow} vacId={props.id}/>:
+            {userRole === 1? 
+            <FollowBtn follow={props.follow} vacId={props.id}/>:
             <AdminBtns {...props}/>}
       <Card.Img src={'/images/'+props.picture}/> 
         <Card.Title className='text-success fw-bold'>{props.destination}</Card.Title>

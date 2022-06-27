@@ -1,7 +1,7 @@
 import React from 'react'
 import VacationI from '../interface/vacationI'
 import DeleteBtn from './DeleteBtn'
-import EditBtn from './EditBtn'
+import EditBtn from '../pages/EditBtn'
 import FollowCount from './FollowCount'
 
 

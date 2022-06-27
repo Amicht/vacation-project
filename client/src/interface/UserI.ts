@@ -3,6 +3,6 @@ export default interface UserI{
     name: string,
     last_name: string,
     username: string,
-    role: 1 | 2
+    role: 0 | 1 | 2
 };
 
